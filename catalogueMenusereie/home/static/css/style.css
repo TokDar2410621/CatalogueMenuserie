@@ -1,0 +1,20 @@
+
+:root { --primary:#0d47a1; --bg:#f9fafb; --text:#111827; --muted:#6b7280; }
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial;color:var(--text);background:var(--bg);}
+header,footer{background:var(--primary);color:#fff;}
+.container{max-width:1100px;margin:0 auto;padding:20px;}
+.nav a{color:#fff;margin-right:16px;text-decoration:none;font-weight:600}
+.nav .brand{margin-right:24px}
+.button{display:inline-block;padding:10px 16px;border-radius:10px;background:var(--primary);color:#fff;text-decoration:none;border:0}
+.button.ghost{background:#fff;color:var(--primary);}
+.hero h1{font-size:2rem;margin-bottom:8px}
+.grid{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+.card{background:#fff;padding:16px;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,.06)}
+.video-responsive{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px}
+.video-responsive iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+.galerie{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin:16px 0}
+form.form p{display:flex;flex-direction:column;margin-bottom:12px}
+form.form input, form.form select, form.form textarea{padding:10px;border:1px solid #e5e7eb;border-radius:8px;background:#fff}
+form.form button{margin-top:8px}
+footer p{margin:0}

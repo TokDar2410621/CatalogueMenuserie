@@ -1,0 +1,66 @@
+{% load static wagtailcore_tags %}
+
+<!doctype html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}FKBois{% endblock %}</title>
+
+  <link rel="stylesheet" href="{% static 'css/site_papa.css' %}">
+  <script defer src="{% static 'js/nav_patch.js' %}?v={% now 'U' %}"></script>
+  {% block extra_css %}{% endblock %}
+</head>
+
+<body class="layout">
+  <header class="sp-header">
+    <div class="container navbar">
+      <a class="brand" href="{% if request.site %}{% pageurl request.site.root_page %}{% else %}/{% endif %}">
+        <img class="logo" src="{% static 'images/logo_fkbois.png' %}" alt="FKBois">
+        <span class="brand-text">FKBois</span>
+      </a>
+
+      <!-- Bouton hamburger (mobile) -->
+      <button class="nav-toggle" aria-controls="nav-links" aria-expanded="false" aria-label="Ouvrir le menu">☰</button>
+
+      <!-- Liens de navigation -->
+      <nav id="nav-links" class="nav-links" aria-label="Navigation principale">
+        <a href="{% if request.site %}{% pageurl request.site.root_page %}{% else %}/{% endif %}">Accueil</a>
+        <a href="/catalogue/">Catalogue</a>
+        <a href="/devis/">Demande de devis</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="sp-footer">
+    <div class="container">
+      <p>&copy; {% now "Y" %} — Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  {% block extra_js %}{% endblock %}
+  <script>
+    // Menu mobile : ouvre/ferme le panneau
+    (function () {
+      const btn = document.querySelector('.nav-toggle');
+      const nav = document.getElementById('nav-links');
+      if (!btn || !nav) return;
+      btn.addEventListener('click', () => {
+        const open = nav.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      // Fermer le menu quand on clique un lien (mobile)
+      nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+        nav.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      }));
+    })();
+  </script>
+</body>
+</html>

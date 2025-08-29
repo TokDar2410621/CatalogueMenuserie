@@ -1,0 +1,178 @@
+/* =====================
+   THEME FKBois — palette bois (GLOBAL)
+   ===================== */
+
+/* ----- Design tokens ----- */
+:root{
+  --bg:#f5f2ec;           /* beige papier */
+  --surface:#ffffff;
+  --text:#172016;         /* noir verdâtre */
+  --muted:#5f6b5f;        /* gris/vert doux */
+  --primary:#8d6e63;      /* marron bois */
+  --primary-600:#5d4037;  /* marron foncé */
+  --accent:#2f5d50;       /* vert forêt */
+  --ring:#e6e1d5;         /* contour chaud */
+  --shadow:0 10px 30px rgba(20,35,20,.10);
+  --radius:14px;
+  --nav-h: 64px;        /* desktop */
+  --nav-h-sm: 56px;     /* mobile */
+  --logo-h: 170px;       /* hauteur max du logo desktop */
+  --logo-h-sm: 120px; 
+}
+
+/* ----- Reset & base ----- */
+*{box-sizing:border-box}
+html,body{height:100%}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  color:var(--text);
+  background:var(--bg);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* ----- Layout sticky footer ----- */
+body.layout{min-height:100vh;display:flex;flex-direction:column}
+.main{flex:1}
+.container{max-width:1120px;margin:0 auto;padding:16px}
+@media (min-width:768px){ .container{padding:24px} }
+
+/* ================= HEADER / NAV ================= */
+.sp-header{
+  background: linear-gradient(90deg,#f5f2ec 0%, #a1887f 40%, #5d4037 100%);
+  box-shadow:var(--shadow);
+  position:sticky;top:0;z-index:100;
+}
+.navbar{
+  min-height: var(--nav-h);
+  max-height: 100px;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding-block: 8px;   /* petit padding vertical, pas plus */
+}
+
+/* Marque + logo */
+.brand{ display: inline-flex; align-items: center; text-decoration: none; }
+
+/* Le logo ne peut pas dépasser une certaine taille */
+.brand .logo{
+  display: block;
+  height: var(--logo-h);         /* verrou taille logo */
+  width: auto;                   /* conserve proportions */
+  max-width: 220px;              /* sécurité si image très large */
+  object-fit: contain;           /* contient dans le cadre */
+}
+@media (max-width: 767px){
+  .navbar{ min-height: var(--nav-h-sm); 
+    max-height: 80px; }
+  .brand .logo{ height: var(--logo-h-sm); }
+  .nav-links{ top: var(--nav-h-sm); }  /* le menu mobile s’aligne sous la barre */
+}
+
+/* Liens */
+.nav-links{display:flex;align-items:center;gap:16px;margin-left:auto}
+.nav-links a{
+  color:#fff;text-decoration:none;font-weight:600;padding:8px 12px;border-radius:10px;
+  transition:background .2s ease
+}
+.nav-links a:hover{background:rgba(255,255,255,.15)}
+
+/* Burger */
+.nav-toggle{
+  display:none;background:transparent;border:1px solid var(--ring);color:#fff;
+  width:44px;height:44px;border-radius:12px;font-size:22px;cursor:pointer
+}
+
+/* Menu mobile */
+@media (max-width:767px){
+  .nav-toggle{display:inline-flex;align-items:center;justify-content:center;margin-left:auto}
+  .nav-links{
+    position:absolute;left:0;right:0;top:64px;display:none;flex-direction:column;gap:8px;
+    background: linear-gradient(90deg,#f5f2ec 0%, #a1887f 40%, #5d4037 100%);
+    padding:12px 16px;border-bottom:1px solid var(--ring)
+  }
+  .nav-links.open{display:flex}
+  .nav-links a{width:100%}
+}
+
+/* ================= TYPO ================= */
+h1,h2,h3{margin:0 0 .5em;font-weight:900;letter-spacing:.2px}
+h1{font-size:clamp(28px,4.2vw,42px)}
+h2{font-size:clamp(22px,3.2vw,28px)}
+h3{font-size:clamp(18px,2.6vw,22px)}
+.muted,.text-muted{color:var(--muted)}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ================= BOUTONS ================= */
+.button{
+  display:inline-block;background:var(--primary);color:#fff;border:0;border-radius:12px;
+  padding:12px 18px;text-decoration:none;font-weight:700;box-shadow:var(--shadow);
+  transition:transform .05s ease, background .2s ease
+}
+.button:hover{background:var(--primary-600)}
+.button:active{transform:translateY(1px)}
+.button.ghost{background:#fff;color:var(--primary);border:1px solid var(--ring)}
+
+/* ================= CARTES / GRILLES (génériques) ================= */
+.grid{
+  list-style:none;margin:20px 0;padding:0;display:grid;gap:18px;
+  grid-template-columns:repeat(1,minmax(0,1fr))
+}
+@media (min-width:640px){ .grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (min-width:960px){ .grid{grid-template-columns:repeat(3,minmax(0,1fr))} }
+
+.card{
+  background:var(--surface);border:1px solid var(--ring);border-radius:var(--radius);padding:18px;
+  box-shadow:var(--shadow);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.card:hover{ transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,.12); }
+.card h3{margin:.2em 0 .6em;font-size:1.125rem;color:var(--primary)}
+.card a{color:var(--accent);text-decoration:none;font-weight:700}
+
+/* Image dans carte */
+.card-image img{width:100%;height:auto;display:block;object-fit:cover;border-radius:10px}
+
+/* Corps de carte */
+.card-body{padding:16px}
+.card-body .details,
+.card-body .texte{color:var(--muted);font-size:.95rem}
+
+/* ================= FORMULAIRES (génériques) ================= */
+form.form p{display:flex;flex-direction:column;margin:0 0 12px}
+form.form input, form.form select, form.form textarea{
+  padding:12px;border:1px solid var(--ring);border-radius:10px;background:#fff;font:inherit
+}
+form.form button{margin-top:8px}
+
+/* ================= VIDEO responsive ================= */
+.video-responsive{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;background:#000}
+.video-responsive iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+/* ================= FOOTER ================= */
+.sp-footer{
+  background: linear-gradient(90deg,#5d4037 0%, #3e2723 100%);
+  color:#e9f0ea;border-top:1px solid var(--ring)
+}
+.sp-footer p{margin:0;text-align:center}
+
+/* ================= UTILITAIRES ================= */
+.section{padding:28px 0}
+@media (min-width:768px){ .section{padding:46px 0} }
+.center{display:flex;align-items:center;justify-content:center}
+.hidden{display:none !important}
+img{max-width:100%;height:auto;display:block;border-radius:12px}
+
+/* ====== (optionnel) styles de filtres catalogue si tu les utilises ====== */
+.catalogue-filter{
+  display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+  margin:12px 0 8px;
+}
+.catalogue-filter input[type="text"],
+.catalogue-filter input[type="number"]{
+  padding:10px 12px; border:1px solid var(--ring); border-radius:10px; background:#fff; font:inherit;
+}
+.catalogue .price{ margin:6px 0 0; color: var(--primary-600); font-weight: 800; }

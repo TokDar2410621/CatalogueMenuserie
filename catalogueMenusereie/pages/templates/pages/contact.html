@@ -1,0 +1,65 @@
+{% extends "pages/base.html" %}
+{% load static %}
+{% load wagtailcore_tags %}
+{% block title %}{{ page.title }}{% endblock %}
+{% block content %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/contact.css' %}">
+{% endblock %}
+<div class="container section contact-wrap">
+  <div class="contact-text">
+    <h1>{{ page.title }}</h1>
+    {% if page.intro %}<div class="description">{{ page.intro|richtext }}</div>{% endif %}
+
+    <div class="contact-cards">
+      {% if page.adresse %}
+      <div class="c-card">
+        <h3>Adresse</h3>
+        <div class="muted">{{ page.adresse|richtext }}</div>
+      </div>
+      {% endif %}
+
+      {% if page.telephone %}
+      <div class="c-card">
+        <h3>Téléphone</h3>
+        <p><a href="tel:{{ page.telephone|cut:' ' }}">{{ page.telephone }}</a></p>
+      </div>
+      {% endif %}
+
+      {% if page.email %}
+      <div class="c-card">
+        <h3>Email</h3>
+        <p><a href="mailto:{{ page.email }}">{{ page.email }}</a></p>
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="contact-actions">
+      {% if page.email %}
+        <a class="button" href="mailto:{{ page.email }}">Écrire un message</a>
+      {% endif %}
+      <a class="button ghost" href="/devis/">Demander un devis</a>
+    </div>
+  </div>
+
+  <div class="contact-map">
+    {% if page.map_query %}
+      <div class="map-embed">
+        <iframe
+          loading="lazy"
+          allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps?q={{ page.map_query|urlencode }}&z={{ page.map_zoom }}&output=embed">
+        </iframe>
+      </div>
+      <p class="map-link">
+        <a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query={{ page.map_query|urlencode }}">
+          Ouvrir dans Google Maps
+        </a>
+      </p>
+    {% else %}
+      <p class="muted">Renseignez <strong>map_query</strong> dans l’admin pour afficher la carte.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends "pages/base.html" %}0
+{% load static %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block title %}Demande de devis{% endblock %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/devis.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container section">
+  <h1>Demander un devis</h1>
+
+  {% if request.GET.success %}
+    <p class="muted">Merci ! Votre demande a été envoyée.</p>
+  {% endif %}
+
+  {% if page.intro %}<div class="description">{{ page.intro|richtext }}</div>{% endif %}
+
+  {# --- APERÇU de l’élément source (si fourni) --- #}
+  {% if form.initial.source_title or source_image %}
+    <div class="devis-preview card" style="margin: 12px 0 18px;">
+      <div class="card-body" style="display:flex; gap:16px; align-items:center;">
+        {% if source_image %}
+          <div style="width:180px; flex:0 0 180px; border-radius:12px; overflow:hidden;">
+            {% image source_image fill-360x240 %}
+          </div>
+        {% endif %}
+        <div style="flex:1;">
+          {% if form.initial.source_title %}<h3 style="margin:0 0 6px;">{{ form.initial.source_title }}</h3>{% endif %}
+          {% if form.initial.source_page %}
+            <p class="muted" style="margin:0;">
+              Référence : <a href="{{ form.initial.source_page }}">{{ form.initial.source_page }}</a>
+            </p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <form method="post" class="form">
+    {% csrf_token %}
+    <p>
+      <label for="{{ form.nom.id_for_label }}">Nom</label>
+      {{ form.nom }}
+    </p>
+    <p>
+      <label for="{{ form.email.id_for_label }}">Email</label>
+      {{ form.email }}
+    </p>
+    <p>
+      <label for="{{ form.telephone.id_for_label }}">Téléphone</label>
+      {{ form.telephone }}
+    </p>
+    <p>
+      <label for="{{ form.message.id_for_label }}">Description</label>
+      {{ form.message }}
+    </p>
+
+    {{ form.source_title }}   {# hidden #}
+    {{ form.source_page }}    {# hidden #}
+    {{ form.source_image_id }}{# hidden #}
+
+    <button type="submit" class="button">Envoyer la demande</button>
+  </form>
+</div>
+{% endblock %}

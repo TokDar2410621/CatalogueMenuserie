@@ -1,0 +1,44 @@
+{% extends "pages/base.html" %}
+{% load static %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block title %}{{ page.title }}{% endblock %}
+
+{% block content %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/realisation.css' %}">
+{% endblock %}
+<div class="container">
+  <h1>{{ page.title }}</h1>
+  <div class="description">{{ page.description|richtext }}</div>
+
+  <div class="grid">
+    {% for item in page.contenu %}
+      {% with bloc=item.value %}
+        <div class="card">
+          {% if bloc.galerie %}
+            <div class="card-image">
+              {% image bloc.galerie.0 fill-400x300 %}
+            </div>
+          {% endif %}
+
+          <div class="card-body">
+            {% if bloc.texte %}
+              <div class="texte">{{ bloc.texte|richtext }}</div>
+            {% endif %}
+            {% if bloc.video %}
+              <div class="video-responsive">
+                <iframe src="https://www.youtube.com/embed/{{ bloc.video|cut:'https://youtu.be/'|cut:'https://www.youtube.com/watch?v=' }}" allowfullscreen loading="lazy"></iframe>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endwith %}
+    {% empty %}
+      <p>Aucune réalisation pour l’instant.</p>
+    {% endfor %}
+  </div>
+
+  <p><a class="button" href="/devis/">Demander un devis similaire</a></p>
+</div>
+{% endblock %}
