@@ -1,6 +1,7 @@
 {% load static wagtailcore_tags %}
 <!doctype html>
 <html lang="fr">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,6 +10,7 @@
   <script defer src="{% static 'js/nav_patch.js' %}?v={% now 'U' %}"></script>
   {% block extra_css %}{% endblock %}
 </head>
+
 <body class="layout">
   <header class="sp-header">
     <div class="container navbar">
@@ -20,9 +22,9 @@
       <!-- Liens de navigation -->
       <nav id="nav-links" class="nav-links" aria-label="Navigation principale">
         <a href="{% if request.site %}{% pageurl request.site.root_page %}{% else %}/{% endif %}">Accueil</a>
-        <a href="/catalogue/">Catalogue</a>
-        <a href="/devis/">Demande de devis</a>
-        <a href="/contact/">Contact</a>
+        <a href="{% slugurl 'catalogue' %}">Catalogue</a>
+        <a href="{% slugurl 'devis' %}">Demande de devis</a>
+        <a href="{% slugurl 'contact' %}">Contact</a>
       </nav>
     </div>
   </header>
@@ -57,4 +59,5 @@
     })();
   </script>
 </body>
+
 </html>
