@@ -1,0 +1,32 @@
+/* Catalogue */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+}
+.card {
+  background: #fff8f0;
+  border: 1px solid #d7ccc8;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 15px;
+  text-align: center;
+}
+.card img { max-width: 100%; border-radius: 8px; }
+.card h3 { margin: 10px 0 5px; }
+.card p { font-size: 14px; color: #5d4037; }
+.card a { color: #ffffff; }
+/*catalogue filter*/
+.catalogue-filter{
+  display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+  margin: 12px 0 8px;
+}
+.catalogue-filter input[type="text"],
+.catalogue-filter input[type="number"]{
+  padding:10px 12px; border:1px solid var(--ring); border-radius:10px; background:#fff; font:inherit;
+}
+.catalogue .price{
+  margin:6px 0 0; color: var(--primary-600); font-weight: 800;
+}

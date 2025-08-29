@@ -1,0 +1,20 @@
+/* Réalisation */
+.galerie {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 10px;
+}
+.galerie img {
+  width: 100%;
+  border-radius: 8px;
+}
+.video-responsive {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+}
+.video-responsive iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+}

@@ -1,0 +1,7 @@
+/* ===== Devis (spécifique) ===== */
+.devis-preview.card {
+  border: 1px solid var(--ring);
+  border-radius: var(--radius);
+  background: #fff;
+  box-shadow: var(--shadow);
+}
