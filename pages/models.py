@@ -1,17 +1,19 @@
+from decimal import Decimal
+
 from django.db import models
 from wagtail.models import Page
 from wagtail.fields import RichTextField, StreamField
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.blocks import StructBlock, URLBlock, RichTextBlock, ListBlock
-from wagtail.admin.panels import FieldPanel, InlinePanel
-from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
-from modelcluster.fields import ParentalKey
+from wagtail.admin.panels import FieldPanel
 from wagtail import blocks
 from wagtail.images import get_image_model
-from wagtail.admin.panels import FieldPanel
-from wagtail.images.blocks import ImageChooserBlock
 from django import forms
+from django.conf import settings
+from django.core.mail import send_mail
+from django.contrib import messages
 from django.shortcuts import render, redirect
+from decimal import Decimal, InvalidOperation
 
 class PageAccueil(Page):
     template = "pages/accueil.html"
@@ -77,15 +79,19 @@ class CataloguePage(Page):
                 return False
             try:
                 v = Decimal(str(value))
-            except Exception:
+            except (InvalidOperation, ValueError):
                 return False
             good = True
             if pmin:
-                try: good = good and (v >= Decimal(pmin))
-                except Exception: pass
+                try:
+                    good = good and (v >= Decimal(pmin))
+                except (InvalidOperation, ValueError, TypeError):
+                    pass
             if pmax:
-                try: good = good and (v <= Decimal(pmax))
-                except Exception: pass
+                try:
+                    good = good and (v <= Decimal(pmax))
+                except (InvalidOperation, ValueError, TypeError):
+                    pass
             return good
 
         filtered = []
@@ -146,9 +152,22 @@ class DevisPage(Page):
         if request.method == "POST":
             form = DevisForm(request.POST)
             if form.is_valid():
-                # TODO: envoyer un email / enregistrer en base, etc.
-                # self._after_submit(form.cleaned_data)  # si tu veux
-                return redirect(self.url + "?success=1")
+                data = form.cleaned_data
+                subject = f"Demande de devis : {data.get('nom')}"
+                lines = [
+                    f"Nom : {data.get('nom')}",
+                    f"Email : {data.get('email')}",
+                    f"Téléphone : {data.get('telephone')}",
+                    f"Message : {data.get('message')}",
+                    f"Source titre : {data.get('source_title')}",
+                    f"Source page : {data.get('source_page')}",
+                    f"Source image id : {data.get('source_image_id')}",
+                ]
+                body = "\n".join(lines)
+                recipient = getattr(settings, "DEFAULT_FROM_EMAIL", "admin@example.com")
+                send_mail(subject, body, recipient, [recipient])
+                messages.success(request, "Votre demande a été envoyée.")
+                return redirect(self.url)
         else:
             form = DevisForm(initial=initial)
 
