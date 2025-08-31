@@ -1,4 +1,4 @@
-{% extends "pages/base.html" %}0
+{% extends "pages/base.html" %}
 {% load static %}
 {% load wagtailcore_tags wagtailimages_tags %}
 
@@ -10,8 +10,10 @@
 <div class="container section">
   <h1>Demander un devis</h1>
 
-  {% if request.GET.success %}
-    <p class="muted">Merci ! Votre demande a été envoyée.</p>
+  {% if messages %}
+    {% for message in messages %}
+      <p class="muted">{{ message }}</p>
+    {% endfor %}
   {% endif %}
 
   {% if page.intro %}<div class="description">{{ page.intro|richtext }}</div>{% endif %}

@@ -11,6 +11,9 @@ from wagtail.images import get_image_model
 from wagtail.admin.panels import FieldPanel
 from wagtail.images.blocks import ImageChooserBlock
 from django import forms
+from django.conf import settings
+from django.core.mail import send_mail
+from django.contrib import messages
 from django.shortcuts import render, redirect
 
 class PageAccueil(Page):
@@ -146,9 +149,22 @@ class DevisPage(Page):
         if request.method == "POST":
             form = DevisForm(request.POST)
             if form.is_valid():
-                # TODO: envoyer un email / enregistrer en base, etc.
-                # self._after_submit(form.cleaned_data)  # si tu veux
-                return redirect(self.url + "?success=1")
+                data = form.cleaned_data
+                subject = f"Demande de devis : {data.get('nom')}"
+                lines = [
+                    f"Nom : {data.get('nom')}",
+                    f"Email : {data.get('email')}",
+                    f"Téléphone : {data.get('telephone')}",
+                    f"Message : {data.get('message')}",
+                    f"Source titre : {data.get('source_title')}",
+                    f"Source page : {data.get('source_page')}",
+                    f"Source image id : {data.get('source_image_id')}",
+                ]
+                body = "\n".join(lines)
+                recipient = getattr(settings, "DEFAULT_FROM_EMAIL", "admin@example.com")
+                send_mail(subject, body, recipient, [recipient])
+                messages.success(request, "Votre demande a été envoyée.")
+                return redirect(self.url)
         else:
             form = DevisForm(initial=initial)
 
