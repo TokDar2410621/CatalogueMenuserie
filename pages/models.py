@@ -164,7 +164,7 @@ class DevisPage(Page):
                     f"Source image id : {data.get('source_image_id')}",
                 ]
                 body = "\n".join(lines)
-                recipient = getattr(settings, "DEFAULT_FROM_EMAIL", "admin@example.com")
+                recipient = getattr(settings, "DEFAULT_FROM_EMAIL", "tokamdarius@gmail.com")
                 send_mail(subject, body, recipient, [recipient])
                 messages.success(request, "Votre demande a été envoyée.")
                 return redirect(self.url)
