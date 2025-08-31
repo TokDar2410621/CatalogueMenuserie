@@ -12,6 +12,7 @@ from wagtail.admin.panels import FieldPanel
 from wagtail.images.blocks import ImageChooserBlock
 from django import forms
 from django.shortcuts import render, redirect
+from decimal import Decimal, InvalidOperation
 
 class PageAccueil(Page):
     template = "pages/accueil.html"
@@ -77,15 +78,19 @@ class CataloguePage(Page):
                 return False
             try:
                 v = Decimal(str(value))
-            except Exception:
+            except (InvalidOperation, ValueError):
                 return False
             good = True
             if pmin:
-                try: good = good and (v >= Decimal(pmin))
-                except Exception: pass
+                try:
+                    good = good and (v >= Decimal(pmin))
+                except (InvalidOperation, ValueError, TypeError):
+                    pass
             if pmax:
-                try: good = good and (v <= Decimal(pmax))
-                except Exception: pass
+                try:
+                    good = good and (v <= Decimal(pmax))
+                except (InvalidOperation, ValueError, TypeError):
+                    pass
             return good
 
         filtered = []
