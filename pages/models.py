@@ -1,15 +1,13 @@
+from decimal import Decimal
+
 from django.db import models
 from wagtail.models import Page
 from wagtail.fields import RichTextField, StreamField
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.blocks import StructBlock, URLBlock, RichTextBlock, ListBlock
-from wagtail.admin.panels import FieldPanel, InlinePanel
-from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
-from modelcluster.fields import ParentalKey
+from wagtail.admin.panels import FieldPanel
 from wagtail import blocks
 from wagtail.images import get_image_model
-from wagtail.admin.panels import FieldPanel
-from wagtail.images.blocks import ImageChooserBlock
 from django import forms
 from django.shortcuts import render, redirect
 
