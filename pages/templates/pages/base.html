@@ -14,14 +14,14 @@
 <body class="layout">
   <header class="sp-header">
     <div class="container navbar">
-      <a class="brand" href="{% if request.site %}{% pageurl request.site.root_page %}{% else %}/{% endif %}">
+      <a class="brand" href="{% if request.site and request.site.root_page %}{% pageurl request.site.root_page %}{% else %}/{% endif %}">
         <img class="logo" src="{% static 'images/logo.png' %}" alt="FKBois">
       </a>
       <!-- Bouton hamburger (mobile) -->
       <button class="nav-toggle" aria-controls="nav-links" aria-expanded="false" aria-label="Ouvrir le menu">☰</button>
       <!-- Liens de navigation -->
       <nav id="nav-links" class="nav-links" aria-label="Navigation principale">
-        <a href="{% if request.site %}{% pageurl request.site.root_page %}{% else %}/{% endif %}">Accueil</a>
+        <a href="{% if request.site and request.site.root_page %}{% pageurl request.site.root_page %}{% else %}/{% endif %}">Accueil</a>
         <a href="{% slugurl 'catalogue' %}">Catalogue</a>
         <a href="{% slugurl 'devis' %}">Demande de devis</a>
         <a href="{% slugurl 'contact' %}">Contact</a>
