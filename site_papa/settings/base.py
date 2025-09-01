@@ -16,7 +16,10 @@ import dj_database_url
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
-CSRF_TRUSTED_ORIGINS = ["https://fkbois.onrender.com"]
+CSRF_TRUSTED_ORIGINS = [
+    "https://fkbois.onrender.com",
+    "https://fbioiss.onrender.com",
+]
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # Quick-start development settings - unsuitable for production
