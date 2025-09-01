@@ -16,7 +16,7 @@
 <body class="layout">
   <header class="sp-header">
     <div class="container navbar">
-      <a class="brand" href="{% if request.site %}{% pageurl request.site.root_page %}{% else %}/{% endif %}">
+      <a class="brand" href="{% if request.site and request.site.root_page %}{% pageurl request.site.root_page %}{% else %}/{% endif %}">
         <img class="logo" src="{% static 'images/logo_fkbois.png' %}" alt="FKBois">
         <span class="brand-text">FKBois</span>
       </a>
@@ -26,7 +26,7 @@
 
       <!-- Liens de navigation -->
       <nav id="nav-links" class="nav-links" aria-label="Navigation principale">
-        <a href="{% if request.site %}{% pageurl request.site.root_page %}{% else %}/{% endif %}">Accueil</a>
+        <a href="{% if request.site and request.site.root_page %}{% pageurl request.site.root_page %}{% else %}/{% endif %}">Accueil</a>
         <a href="/catalogue/">Catalogue</a>
         <a href="/devis/">Demande de devis</a>
         <a href="/contact/">Contact</a>
