@@ -22,6 +22,26 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
+
+# Media -> S3
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
+AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
+AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME", "us-east-2")
+AWS_S3_SIGNATURE_VERSION = "s3v4"
+
+AWS_QUERYSTRING_AUTH = False      # URLs propres (pas de ?X-Amz-...)
+AWS_S3_FILE_OVERWRITE = False     # n’écrase pas un fichier si même nom
+AWS_DEFAULT_ACL = None            # pas d’ACL implicite
+
+# URL publique des médias
+MEDIA_URL = os.getenv(
+    "MEDIA_URL",
+    f"https://{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com/"
+)
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -51,6 +71,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "pages",
+    "storages",
 ]
 
 MIDDLEWARE = [
