@@ -60,7 +60,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "pages",
-    "storages",
 ]
 
 MIDDLEWARE = [
@@ -158,10 +157,10 @@ STATIC_URL = "/static/"
 # >>> CE CHEMIN DOIT EXISTER physiquement <<<
 STATICFILES_DIRS = [BASE_DIR / "site_papa" / "static"]
 STATIC_ROOT = BASE_DIR / "static_collected"
-
+"""
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
-
+"""
 # Default storage settings, with the staticfiles storage updated.
 # See https://docs.djangoproject.com/en/5.1/ref/settings/#std-setting-STORAGES
 
