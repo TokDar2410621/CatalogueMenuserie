@@ -24,23 +24,12 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 
 # Media -> S3
-DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
-AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
-AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
-AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME", "us-east-2")
-AWS_S3_SIGNATURE_VERSION = "s3v4"
-
-AWS_QUERYSTRING_AUTH = False      # URLs propres (pas de ?X-Amz-...)
-AWS_S3_FILE_OVERWRITE = False     # n’écrase pas un fichier si même nom
-AWS_DEFAULT_ACL = None            # pas d’ACL implicite
-
-# URL publique des médias
+"""# URL publique des médias
 MEDIA_URL = os.getenv(
     "MEDIA_URL",
     f"https://{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com/"
-)
+)"""
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -175,7 +164,33 @@ MEDIA_URL = "/media/"
 
 # Default storage settings, with the staticfiles storage updated.
 # See https://docs.djangoproject.com/en/5.1/ref/settings/#std-setting-STORAGES
+
+# --- STORAGE CONFIG ---
+INSTALLED_APPS += ["storages"]
+
+AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
+AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME", "us-east-2")
+AWS_S3_SIGNATURE_VERSION = "s3v4"
+AWS_QUERYSTRING_AUTH = False
+AWS_DEFAULT_ACL = None
+AWS_S3_FILE_OVERWRITE = False
+
+AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com"
+MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
+
 STORAGES = {
+    # 👉 MEDIA sur S3 (uploads Wagtail)
+    "default": {
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+    },
+    # 👉 STATIC servis par WhiteNoise (comme avant)
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+"""STORAGES = {
     "default": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
     },
@@ -186,7 +201,7 @@ STORAGES = {
     "staticfiles": {
         "BACKEND": "django.contrib.staticfiles.storage.ManifestStaticFilesStorage",
     },
-}
+}"""
 
 # Django sets a maximum of 1000 fields per form by default, but particularly complex page models
 # can exceed this limit within Wagtail's page editor.
