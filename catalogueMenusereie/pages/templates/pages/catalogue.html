@@ -15,9 +15,12 @@
 
   <!-- Barre de recherche / filtres -->
   <form method="get" class="catalogue-filter">
-    <input type="text" name="q" placeholder="Rechercher par titre…" value="{{ q }}">
-    <input type="number" step="0.01" name="min" placeholder="Prix min" value="{{ min }}">
-    <input type="number" step="0.01" name="max" placeholder="Prix max" value="{{ max }}">
+    <label for="q">Rechercher par titre</label>
+    <input id="q" type="text" name="q" placeholder="Rechercher par titre…" value="{{ q }}">
+    <label for="min">Prix min</label>
+    <input id="min" type="number" step="0.01" name="min" placeholder="Prix min" value="{{ min }}">
+    <label for="max">Prix max</label>
+    <input id="max" type="number" step="0.01" name="max" placeholder="Prix max" value="{{ max }}">
     <button type="submit" class="button">Filtrer</button>
     {% if q or min or max %}
       <a href="{{ page.url }}" class="button ghost">Réinitialiser</a>
