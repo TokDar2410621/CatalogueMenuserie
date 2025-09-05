@@ -10,10 +10,8 @@
 <div class="container section">
   <h1>Demander un devis</h1>
 
-  {% if messages %}
-    {% for message in messages %}
-      <p class="muted">{{ message }}</p>
-    {% endfor %}
+  {% if request.GET.success %}
+    <p class="muted">Merci ! Votre demande a été envoyée.</p>
   {% endif %}
 
   {% if page.intro %}<div class="description">{{ page.intro|richtext }}</div>{% endif %}
@@ -24,7 +22,7 @@
       <div class="card-body" style="display:flex; gap:16px; align-items:center;">
         {% if source_image %}
           <div style="width:180px; flex:0 0 180px; border-radius:12px; overflow:hidden;">
-            {% image source_image fill-360x240 %}
+            {% image source_image fill-360x240 alt=form.initial.source_title|default:'Image de la demande de devis' %}
           </div>
         {% endif %}
         <div style="flex:1;">
