@@ -18,7 +18,11 @@
         <div class="card">
           {% if bloc.galerie %}
             <div class="card-image">
-              {% image bloc.galerie.0 fill-400x300 %}
+              {% if bloc.texte %}
+                {% image bloc.galerie.0 fill-400x300 alt=bloc.texte|striptags|truncatewords:15 %}
+              {% else %}
+                {% image bloc.galerie.0 fill-400x300 alt=page.title %}
+              {% endif %}
             </div>
           {% endif %}
 

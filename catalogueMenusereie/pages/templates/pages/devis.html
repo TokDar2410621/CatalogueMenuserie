@@ -1,4 +1,4 @@
-{% extends "pages/base.html" %}0
+{% extends "pages/base.html" %}
 {% load static %}
 {% load wagtailcore_tags wagtailimages_tags %}
 
@@ -22,7 +22,7 @@
       <div class="card-body" style="display:flex; gap:16px; align-items:center;">
         {% if source_image %}
           <div style="width:180px; flex:0 0 180px; border-radius:12px; overflow:hidden;">
-            {% image source_image fill-360x240 %}
+            {% image source_image fill-360x240 alt=form.initial.source_title|default:'Image de la demande de devis' %}
           </div>
         {% endif %}
         <div style="flex:1;">
