@@ -78,6 +78,7 @@ body.layout{min-height:100vh;display:flex;flex-direction:column}
   transition:background .2s ease
 }
 .nav-links a:hover{background:rgba(255,255,255,.15)}
+.nav-links a.active{background:rgba(255,255,255,.25)}
 
 /* Burger */
 .nav-toggle{
