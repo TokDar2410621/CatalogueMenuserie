@@ -9,6 +9,7 @@
   <title>{% block title %}FKBois{% endblock %}</title>
 
   <link rel="stylesheet" href="{% static 'css/site_papa.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <script defer src="{% static 'js/nav_patch.js' %}?v={% now 'U' %}"></script>
   {% block extra_css %}{% endblock %}
 </head>
@@ -39,9 +40,32 @@
   </main>
 
   <footer class="sp-footer">
-    <div class="container">
-      <p>&copy; {% now "Y" %} — Tous droits réservés.</p>
+    <div class="container footer-grid">
+      <div>
+        <h4>Coordonnées</h4>
+        <p>123 Rue des Artisans<br>75000 Paris</p>
+        <p>Tél : 01 23 45 67 89<br>Email : contact@fkbois.fr</p>
+      </div>
+      <div>
+        <h4>Liens rapides</h4>
+        <ul>
+          <li><a href="{% if request.site %}{% pageurl request.site.root_page %}{% else %}/{% endif %}">Accueil</a></li>
+          <li><a href="/catalogue/">Catalogue</a></li>
+          <li><a href="/devis/">Demande de devis</a></li>
+          <li><a href="/contact/">Contact</a></li>
+          <li><a href="/mentions-legales/">Mentions légales</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Suivez-nous</h4>
+        <div class="social-icons">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
     </div>
+    <p class="copyright">&copy; {% now "Y" %} — Tous droits réservés.</p>
   </footer>
 
   {% block extra_js %}{% endblock %}
