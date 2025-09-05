@@ -10,12 +10,21 @@
   grid-template-columns: repeat(auto-fill, minmax(220px,1fr));
   margin:16px 0;
 }
-.c-card{
+.c-card{ 
   background:#fff; border:1px solid var(--ring); border-radius: var(--radius);
   padding:14px; box-shadow: var(--shadow);
 }
-.c-card h3{ margin:0 0 6px; font-size:1.05rem; color: var(--primary); }
-.c-card a{ color: var(--text); text-decoration: none; }
+.c-card--full{
+  background:#fff; border:1px solid var(--ring); border-radius: var(--radius);
+  padding:14px; box-shadow: var(--shadow);
+  grid-column: 1 / -1;    /* occupe toute la rangée */
+  justify-self: start;    /* largeur basée sur le contenu, pas étirée */
+  width: max-content;     /* s’agrandit avec le texte */
+  max-width: 100%;        /* ne dépasse pas le conteneur */
+  white-space: nowrap;    /* évite le retour à la ligne, donc la carte s’élargit */
+}
+.c-card h3{ margin:0 0 6px; font-size:1.05rem; color: var(--primary);  }
+.c-card a{ color: var(--text); text-decoration: none;  }
 .c-card a:hover{ text-decoration: underline; }
 
 .contact-actions{ display:flex; gap:12px; flex-wrap:wrap; margin-top:12px; }
